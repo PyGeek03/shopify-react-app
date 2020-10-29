@@ -45,6 +45,7 @@ class AnnotatedLayout extends React.Component {
                             Save
                           </Button>
                         </Stack>
+    					The current discount is <TextStyle variation = "strong">{discount}</TextStyle>.
                       </FormLayout>
                     </Form>
                   </Card>
