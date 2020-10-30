@@ -15,7 +15,7 @@ import {
 
 class AnnotatedLayout extends React.Component {
     state = {
-        discount: '10%',
+        discount: 10,
         enabled: false,
     };
 
@@ -28,31 +28,35 @@ class AnnotatedLayout extends React.Component {
             <Page>
               <Layout>
                 <Layout.AnnotatedSection
-                  title = "Default discount"
-                  description = "Add a product to Sample App, it will automatically be discounted."
+                  title="Default discount"
+                  description="Add a product to Sample App, it will automatically be discounted."
                 >
                   <Card sectioned>
-                    <Form onSubmit = {this.handleSubmit}>
+                    <Form onSubmit= {this.handleSubmit}>
                       <FormLayout>
                         <TextField
-                          value = {discount}
-                          onChange = {this.handleChange('discount')}
-                          label = "Discount percentage"
-                          type = "discount"
+                          value={discount}
+                          onChange={this.handleChange('discount')}
+                          label="Discount percentage"
+                          type="number"
+                          max="100"
+                          min="0"
                         />
-                        <Stack distribution = "trailing">
+                        <Stack distribution="trailing">
                           <Button primary submit>
                             Save
                           </Button>
                         </Stack>
-    					The current discount is <TextStyle variation = "strong">{discount}</TextStyle>.
+                        <div>
+      					  The current discount is <TextStyle variation="strong"> {discount}%</TextStyle>.
+                        </div>
                       </FormLayout>
                     </Form>
                   </Card>
                 </Layout.AnnotatedSection>
 				<Layout.AnnotatedSection
-				  title = "Price updates"
-				  description = "Temporarily disable all Sample App price updates"
+				  title="Price updates"
+				  description="Temporarily disable all Sample App price updates"
 				>
 				  <SettingToggle
 					action = {{
@@ -61,8 +65,16 @@ class AnnotatedLayout extends React.Component {
 					}}
 					enabled = {enabled}
 				  >
-					This setting is{' '}
-					<TextStyle variation = "strong">{textStatus}</TextStyle>.
+                    <div>
+					  This setting is 
+                        <TextStyle variation = "strong">
+                          {enabled
+                            ? <TextStyle variation = "positive"> enabled</TextStyle> 
+                            : <TextStyle variation = "negative"> disabled</TextStyle>
+                          }
+                        </TextStyle>
+                      .
+                    </div>
 				  </SettingToggle>
 				</Layout.AnnotatedSection>
               </Layout>
