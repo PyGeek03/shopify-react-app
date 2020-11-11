@@ -15,7 +15,7 @@ import store from 'store-js';
 
 class AnnotatedLayout extends React.Component {
   state = {
-    discount: 10,
+    discount: store.get('discount'),
     enabled: true,
   };
 
@@ -96,7 +96,7 @@ class AnnotatedLayout extends React.Component {
     this.setState(({ enabled }) => {
       return { enabled: !enabled };
     });
-    store.set('update-enabled', this.state.enabled);
+    store.set('update-disabled', !this.state.enabled);
   };
 }
 
