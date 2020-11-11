@@ -11,18 +11,17 @@ import {
   TextField,
   TextStyle,
 } from '@shopify/polaris';
-
+import store from 'store-js';
 
 class AnnotatedLayout extends React.Component {
   state = {
     discount: 10,
-    enabled: false,
+    enabled: true,
   };
 
   render() {
     const { discount, enabled } = this.state;
-    const contentStatus = enabled ? 'Disable' : 'Enable';
-    const textStatus = enabled ? 'enabled' : 'disabled';
+    const contentStatus = enabled ? 'Enable' : 'Disable';
 
     return (
       <Page>
@@ -42,14 +41,14 @@ class AnnotatedLayout extends React.Component {
                     max="100"
                     min="0"
                   />
+                  <div>
+                    The new discount will be <TextStyle variation="strong"> {discount}%</TextStyle>.
+                  </div>
                   <Stack distribution="trailing">
                     <Button primary submit>
                       Save
-                          </Button>
-                  </Stack>
-                  <div>
-                    The current discount is <TextStyle variation="strong"> {discount}%</TextStyle>.
-                        </div>
+                    </Button>
+                  </Stack>                  
                 </FormLayout>
               </Form>
             </Card>
@@ -66,15 +65,14 @@ class AnnotatedLayout extends React.Component {
               enabled={enabled}
             >
               <div>
-                This setting is
-                        <TextStyle variation="strong">
-                  {enabled
-                    ? <TextStyle variation="positive"> enabled</TextStyle>
-                    : <TextStyle variation="negative"> disabled</TextStyle>
-                  }
-                </TextStyle>
-                      .
-                    </div>
+                Price update is
+                  <TextStyle variation="strong">
+                    {enabled
+                      ? <TextStyle variation="negative"> disabled</TextStyle>
+                      : <TextStyle variation="positive"> enabled</TextStyle>
+                    }
+                  </TextStyle>.
+              </div>
             </SettingToggle>
           </Layout.AnnotatedSection>
         </Layout>
@@ -84,8 +82,9 @@ class AnnotatedLayout extends React.Component {
 
   handleSubmit = () => {
     this.setState({
-      discount: this.state.discount,
+      discount: Number(this.state.discount),
     });
+    store.set('discount', this.state.discount);
     console.log('submission', this.state);
   };
 
@@ -97,6 +96,7 @@ class AnnotatedLayout extends React.Component {
     this.setState(({ enabled }) => {
       return { enabled: !enabled };
     });
+    store.set('update-enabled', this.state.enabled);
   };
 }
 

@@ -105,6 +105,7 @@ class EditProduct extends React.Component {
                                                 primaryAction={[
                                                     {
                                                         content: 'Save',
+                                                        disabled: !store.get('update-enabled'),
                                                         onAction: () => {
                                                             const productVariableInput = {
                                                                 id: variantId,
@@ -140,11 +141,12 @@ class EditProduct extends React.Component {
     };
 
     itemToBeConsumed = () => {
-        const item = store.get('item');
-        const price = item.variants.edges[0].node.price;
-        const variantId = item.variants.edges[0].node.id;
-        const discounter = price * 0.1;
+        const item = store.get('item').variants.edges[0].node;
+        const price = item.price;
+        const variantId = item.id;
         this.setState({ price, variantId });
+
+        const discounter = price * store.get('discount') / 100;        
         return (price - discounter).toFixed(2);
     };
 }
